@@ -139,33 +139,6 @@ void staticStorageClass()
 	printf("--------------------------------");
 }
 
-int main()
-{
-
-	printf("A program to demonstrate"
-		" Storage Classes in C\n\n");
-
-	// To demonstrate auto Storage Class
-	autoStorageClass();
-
-	// To demonstrate register Storage Class
-	registerStorageClass();
-
-	// To demonstrate extern Storage Class
-	externStorageClass();
-
-	// To demonstrate static Storage Class
-	staticStorageClass();
-
-	// exiting
-	printf("\n\nStorage Classes demonstrated");
-
-	return 0;
-}
-
-
-
-
 /*
 C Storage Classes are used to describe the features of a variable/function. 
 These features basically include the scope, visibility, and lifetime which help us to trace the existence of a particular variable during the runtime of a program.
@@ -219,6 +192,227 @@ storage classes in c
 
 */
 
+// defining constant using #define
+
+/*
+	Preprocessor
+
+	We can also define a constant in C using #define preprocessor. T
+	The constant defined using #define are macros that behaves like a constant. These constants are not handled by the compiler, 
+	they are handled by the preprocessor and 
+	are replaced by their value before complication.
+*/
+
+#define pi = 3.14;
+
+/*
+	Yes, we can take advantage of the loophole created by 
+	pointers to change the value of a variable declared as a constant in C. 
+
+*/
+
+void loophole(){
+
+	const int number = 15;
+
+	printf("Before change %d \n",number);
+
+	//int*ptr = &number;
+
+	//*ptr = 21;
+
+	printf("After change %d\n",number);
+
+}
+
+/*
+	Pointer to constant
+
+	We can change the pointer to point to any other integer variable,
+	but cannot change the value of the object (entity) pointed using pointer ptr. 
+	he pointer is stored in the read-write area (stack in the present case). The object pointed may be in the read-only or read-write area.
+*/
+
+/*
+	Below you can not change the value of sample_num via ptr1
+	However, you can change the address that ptr1 points
+*/
+
+int sample_num=15;
+int sample_number=19;
+
+// pointer to constant
+const int* ptr1 = &sample_num;
+
+// or
+int const* ptr2= &sample_num;
+
+// invalid
+*ptr1 = 100; 
+
+// valid
+ptr1 = &sample_number;
+
+// constant pointer to variable
+int* const ptr = &sample_num;
+
+// invalid
+ptr = &sample_number;
+
+// valid
+*ptr = 100;
+
+// constant pointer to constant
+
+const int* const ptr3 = &sample_num;
+
+/*	
+	The above declaration is a constant pointer to a constant variable which means 
+	we cannot change the value pointed
+	by the pointer as well as we cannot point the pointer to other variables
+*/
+
+
+
+
+
+int main()
+{
+	pointer_to_constant();
+
+	printf("A program to demonstrate"
+		" Storage Classes in C\n\n");
+
+	// To demonstrate auto Storage Class
+	autoStorageClass();
+
+	// To demonstrate register Storage Class
+	registerStorageClass();
+
+	// To demonstrate extern Storage Class
+	externStorageClass();
+
+	// To demonstrate static Storage Class
+	staticStorageClass();
+
+	// exiting
+	printf("\n\nStorage Classes demonstrated");
+
+	return 0;
+}
+
+
+/*
+	Advantages of const Qualifiers in C
+
+The const qualifier in C has the following advantages:
+
+    Improved Code Readability: By marking a variable as const, you indicate to other programmers that its value should not be changed, making your code easier to understand and maintain.
+    Enhanced Type Safety: By using const, you can ensure that values are not accidentally modified, reducing the chance of bugs and errors in your code.
+    Improved Optimization: Compilers can optimize const variables more effectively, as they know that their values will not change during program execution. This can result in faster and more efficient code.
+    Better Memory Usage: By declaring variables as const, you can often avoid having to make a copy of their values, which can reduce memory usage and improve performance.
+    Improved Compatibility: By declaring variables as const, you can make your code more compatible with other libraries and APIs that use const variables.
+    Improved Reliability: By using const, you can make your code more reliable, as you can ensure that values are not modified unexpectedly, reducing the risk of bugs and errors in your code.
+*/
+
+/*
+	Summary
+Type					Declaration			Pointer Value Change (*ptr = 100)			Pointing Value Change (ptr  = &a)
+                                           	
+
+Pointer to Variable		int * ptr						Yes												Yes
+
+Pointer to Constant		const int * ptr
+						int const * ptr					No												Yes
+
+Constant Pointer to Variable	int * const ptr			Yes												No
+
+Constant Pointer to Constant	const int * const ptr	No												No
+*/
+
+
+/*
+// C program to demonstrate that the pointer to point to
+// any other integer variable, but the value of the object
+// (entity) pointed can not be changed
+
+#include <stdio.h>
+
+int main(void)
+{
+	i is stored in read only area
+	int const i = 10;
+	int j = 20;
+
+	pointer to integer constant. Here i
+	is of type "const int", and &i is of
+	type "const int *". And p is of type
+	"const int", types are matching no issue
+	int const* ptr = &i;
+
+	printf("ptr: %d\n", *ptr);
+
+	error 
+	*ptr = 100;
+
+	 valid. We call it up qualification. In
+	C/C++, the type of "int *" is allowed to up
+	qualify to the type "const int *". The type of
+	&j is "int *" and is implicitly up qualified by
+	the compiler to "const int *" 
+
+	ptr = &j;
+	printf("ptr: %d\n", *ptr);
+
+	return 0;
+}
+
+*/
+
+
+
+/*
+// C program to demonstrate the down qualification
+
+#include <stdio.h>
+
+int main(void)
+{
+	int i = 10;
+	int const j = 20;
+
+	 ptr is pointing an integer object 
+	int* ptr = &i;
+
+	printf("*ptr: %d\n", *ptr);
+
+	The below assignment is invalid in C++, results in
+	error In C, the compiler *may* throw a warning, but
+	casting is implicitly allowed
+	ptr = &j;
+
+	In C++, it is called 'down qualification'. The type
+	of expression &j is "const int *" and the type of ptr
+	is "int *". The assignment "ptr = &j" causes to
+	implicitly remove const-ness from the expression &j.
+	C++ being more type restrictive, will not allow
+	implicit down qualification. However, C++ allows
+	implicit up qualification. The reason being, const
+	qualified identifiers are bound to be placed in
+	read-only memory (but not always). If C++ allows
+	above kind of assignment (ptr = &j), we can use 'ptr'
+	to modify value of j which is in read-only memory.
+	The consequences are implementation dependent, the
+	program may fail
+	at runtime. So strict type checking helps clean code.
+
+	printf("*ptr: %d\n", *ptr);
+
+	return 0;
+}
+
+
+*/
 
 
 
