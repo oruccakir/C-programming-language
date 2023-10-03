@@ -415,4 +415,5 @@ int main(void)
 */
 
 
+// To restrict access to the current file only global variables can be marked as static
 
