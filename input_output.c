@@ -170,7 +170,7 @@ To avoid Buffer Overflow, fgets() should be used instead of gets() as fgets() ma
 */
 
 #define MAX_LIMIT 20
-void read()
+void read1()
 {
 	char str[MAX_LIMIT];
 	fgets(str, MAX_LIMIT, stdin);
