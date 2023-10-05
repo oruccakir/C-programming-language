@@ -69,13 +69,6 @@ int add_numbers(int n,...){
     Note: C and C++ both support call by value as well as call by reference whereas Java doesn’t support call by reference.
 */
 
-int main(){
-
-    printf("Sum %d",add_numbers(3,5,5,3));
-
-    return 0;
-}
-
 /*
     New programmers are usually in the search of ways to return multiple values from a function. Unfortunately,
     C and C++ do not allow this directly. But fortunately, with a little bit of clever programming,
@@ -85,3 +78,67 @@ int main(){
     By using structures.
     By using Arrays.
 */
+
+/*
+    CALLBACKS IN C
+
+    callbacks are implemented using function pointers
+
+    A callback is any executable code that is passed as an argument to another code,
+    which is expected to call back (execute) the argument at a given time.
+    In simple language, If a reference of a function is passed to another function as an argument to call it, then it will be called a Callback function.
+
+
+*/
+
+void A(){
+    printf("I am a function A \n");
+}
+
+// callback function
+void B(void (*ptr)()){
+    (*ptr)();
+}
+
+void fun(int a){
+    printf("Value of a is %d \n",a);
+}
+
+int add(int a,int b){return a+b;}
+
+/*
+    Why do we need an extra bracket around function pointers like fun_ptr in above example?
+If we remove bracket, then the expression “void (*fun_ptr)(int)” becomes “void *fun_ptr(int)” 
+which is declaration of a function that returns void pointer. 
+*/
+
+int main(){
+
+    void (*ptr)() = &A;
+
+    // calling function B and passing
+    // address of the function A as argument
+    B(ptr);
+
+
+     // fun_ptr is a pointer to function fun()  
+    void (*fun_ptr)(int) = &fun; 
+  
+    /* The above line is equivalent of following two 
+       void (*fun_ptr)(int); 
+       fun_ptr = &fun;  
+    */
+  
+    // Invoking fun() using fun_ptr 
+    (*fun_ptr)(10); 
+
+    int (*add_ptr)(int,int) = &add;
+
+    int res = (*add_ptr)(12,15);
+    printf("Result : ",res);
+
+    
+
+    return 0;
+}
+
