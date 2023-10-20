@@ -12,15 +12,7 @@ int main(){
 
     struct SingleLinkedList* list = &lis;
 
-    addFirst(list,8);
-
-    removeFirst(list);
-
-    printList(list);
-
-    printf("%d",list->size);
-
-    /*
+    
     addFirst(list,12);
 
     addLast(list,9);
@@ -31,12 +23,14 @@ int main(){
 
     removeFirst(list);
 
+    delete(list,1);
+
     printList(list);
 
     printf("Size : %d \n",list->size);
 
     printf("%d",contains(list,12));
-    */
+    
 
     return 0;
 }

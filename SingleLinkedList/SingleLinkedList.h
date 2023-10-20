@@ -116,7 +116,11 @@ int removeFirst(struct SingleLinkedList* list){
         return -1;
     else{
 
+        int data = 0;
+
         struct Node* temp = list->head;
+
+        data = temp->data;
 
         list->head = list->head->next;
 
@@ -124,10 +128,10 @@ int removeFirst(struct SingleLinkedList* list){
 
         list->size --;
 
+        return data;
+
     }
     
-
-    return 0;
 }
 
 int removeLast(struct SingleLinkedList* list){
@@ -139,24 +143,67 @@ int removeLast(struct SingleLinkedList* list){
         removeFirst(list);
     }
     else{
+
+        int data = 0;
+
         struct Node *temp = list->head;
 
-        while (temp->next != )
+        while (temp->next->next != NULL)
         {
-            
+            temp = temp->next;
         }
-        
+
+        struct Node* deletedNode = temp->next;
+
+        data = deletedNode->data;
+
+        temp->next = NULL;
+
+        free(deletedNode);
+
+        list->size--;
+
+        return data;
 
     }
-    return 0;
+    
 }
 
 int delete(struct SingleLinkedList* list,int index){
 
     if(index >= list->size)
         return -1;
+    else if(index == 0){
+        removeFirst(list);
+    }
+    else if(index == list->size-1){
+        removeLast(list);
+    }
+    else{
 
-    return 0;
+        int idx = 0,data = 0;
+
+        struct Node* temp = list->head;
+
+        while(idx != index -1){
+            temp = temp->next;
+            idx++;
+        }
+
+        struct Node* deletedNode = temp->next;
+
+        temp->next = deletedNode->next;
+
+        data = deletedNode->data;
+
+        free(deletedNode);
+
+        list->size--;
+
+        return data;
+
+    }
+
 }
 
 bool contains(struct SingleLinkedList* list, int goal){
