@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 
 struct SingleLinkedList{
 
@@ -48,7 +49,7 @@ void addFirst(struct SingleLinkedList *list,int data){
     newNode->next = list->head;
     list->head = newNode;
 
-    list->size++;
+    list->size = list->size + 1;
 
 }
 
@@ -70,7 +71,7 @@ void addLast(struct SingleLinkedList *list,int data){
     
         temp->next = newNode;
 
-        list->size++;
+        list->size = list->size + 1;
 
     }
 
@@ -102,8 +103,75 @@ void add(struct SingleLinkedList* list,int data,int index){
         newNode->next = temp->next;
         temp->next = newNode;
 
-        list->size++;
+        list->size = list->size + 1;
         
     }
+
+}
+
+
+int removeFirst(struct SingleLinkedList* list){
+
+    if(list->size == 0)
+        return -1;
+    else{
+
+        struct Node* temp = list->head;
+
+        list->head = list->head->next;
+
+        free(temp);
+
+        list->size --;
+
+    }
+    
+
+    return 0;
+}
+
+int removeLast(struct SingleLinkedList* list){
+    
+    if(list->size == 0){
+        return -1;
+    }
+    else if(list->size == 1){
+        removeFirst(list);
+    }
+    else{
+        struct Node *temp = list->head;
+
+        while (temp->next != )
+        {
+            
+        }
+        
+
+    }
+    return 0;
+}
+
+int delete(struct SingleLinkedList* list,int index){
+
+    if(index >= list->size)
+        return -1;
+
+    return 0;
+}
+
+bool contains(struct SingleLinkedList* list, int goal){
+
+    struct Node *temp = list->head;
+
+    while (temp != NULL)
+    {
+        if(temp->data == goal)
+            return true;
+        
+        temp = temp->next;
+
+    }
+
+    return false;
 
 }
