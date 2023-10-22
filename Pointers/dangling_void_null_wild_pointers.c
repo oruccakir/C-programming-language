@@ -67,6 +67,22 @@ int *fun(){
     The pointer may be initialized to a non-NULL garbage value that may not be a valid address. 
 */
 
+// Note that the purpose of restrict is to
+// show only syntax. It doesn't change anything
+// in output (or logic). It is just a way for
+// programmer to tell compiler about an
+// optimization
+void use(int* a, int* b, int* restrict c)
+{
+    *a += *c;
+ 
+    // Since c is restrict, compiler will
+    // not reload value at address c in
+    // its assembly code. Therefore generated
+    // assembly code is optimized
+    *b += *c;
+}
+
 int main(){
 
     int *ptr = (int *)malloc(sizeof(int));
@@ -101,6 +117,22 @@ int main(){
     ptr = &y;
     printf("\nFloat variable is = %f", *((float*)ptr));
 
+    int a = 50, b = 60, c = 70;
+    use(&a, &b, &c);
+    printf("%d %d %d", a, b, c);
+
 
     return 0;
 }
+
+/*
+    In the C programming language (after the C99 standard), a new keyword is introduced known as restrict. 
+
+restrict keyword is mainly used in pointer declarations as a type qualifier for pointers.
+It doesn’t add any new functionality. It is only a way for the programmer to inform about an optimization that the compiler can make.
+When we use restrict with a pointer ptr, it tells the compiler that ptr is the only way to access the object pointed by it, in other words,
+there’s no other pointer pointing to the same object i.e. restrict keyword specifies that a particular pointer argument does not alias any other
+ and the compiler doesn’t need to add any additional checks.
+If a programmer uses restrict keyword and violates the above condition, the result is undefined behavior.
+restrict is not supported by C++. It is a C-only keyword.
+*/
