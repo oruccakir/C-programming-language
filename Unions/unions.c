@@ -285,3 +285,77 @@ A structure or a union can be passed by value to functions and returned by value
     But technically speaking, unions are better in that they help save a lot of memory,
     resulting in the overall advantage over structures in the long run.    
 */
+
+/*
+    In C11 standard of C, anonymous Unions and structures were added. 
+Anonymous unions/structures are also known as unnamed unions/structures as they don’t have names. Since there is no names, direct objects(or variables) of them are not created and we use them in nested structure or unions. 
+Definition is just like that of a normal union just without a name or tag. For example, 
+
+// Anonymous union example
+union 
+{
+   char alpha;
+   int num;
+};
+// Anonymous structure example
+struct 
+{
+   char alpha;
+   int num;
+};
+Since there is no variable and no name, we can directly access members. This accessibility works only inside the scope where the anonymous union is defined. 
+Following is a complete working example of anonymous union.
+*/
+
+// C Program to demonstrate working of anonymous union
+
+struct Scope {
+	// Anonymous union
+	union {
+		char alpha;
+		int num;
+	};
+};
+
+int m1()
+{
+	struct Scope x, y;
+	x.num = 65;
+	y.alpha = 'A';
+
+	// Note that members of union are accessed directly
+	printf("y.alpha = %c, x.num = %d", y.alpha, x.num);
+
+	return 0;
+}
+
+/*
+    Remember that we can only access one member of a union at a time.
+    If another member is assigned the previous member will be wiped out from the union.
+*/
+
+
+// C Program to demonstrate working of anonymous struct
+
+struct Scope1
+{
+	// Anonymous structure
+	struct
+	{
+		char alpha;
+		int num;
+	};
+};
+
+int m1()
+{
+	struct Scope1 x;
+	x.num = 65;
+	x.alpha = 'B';
+
+	// Note that members of structure are accessed directly
+	printf("x.alpha = %c, x.num = %d", x.alpha, x.num);
+
+	return 0;
+}
+
