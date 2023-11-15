@@ -26,7 +26,19 @@ and store them as a C string until a newline character or the End-of-file (EOF) 
 We can also scanset characters inside the scanf() function
 */
 
+void charArrayString(){
+
+    char s[]="abcdefgh";
+    printf("%d\n",strlen(s));
+    printf("%d",sizeof(s)/sizeof(char));
+
+}
+
 int main(){
+
+    charArrayString();
+
+    /*
 
     // Assigning a string literal without size
     char str[] = "oruç";
@@ -137,7 +149,7 @@ int main(){
     } 
     
     
-
+*/
 
     return 0;
 }

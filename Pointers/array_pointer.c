@@ -33,6 +33,8 @@ void sample(){
                           sizeof(p), sizeof(*p));
     printf("sizeof(ptr) = %lu, sizeof(*ptr) = %lu\n", 
                         sizeof(ptr), sizeof(*ptr));
+
+    printf("size of the p %d", sizeof(p));
 }
 
 /*
@@ -86,6 +88,7 @@ int main(){
      
     printf("p = %p, ptr = %p\n", p, ptr);
 
+    sample();
 
     return 0;
 }
