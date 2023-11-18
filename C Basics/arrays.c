@@ -68,9 +68,52 @@ This can be done by wrapping the array in a structure and creating a variable of
   but dynamic arrays are not. So this solution works only for non-dynamic arrays (created without new or malloc).
 */
 
+void array(int *p,int size){
+
+    int *end = &p[size];
+
+    while (p != end)
+    {
+        printf("%d ",*p);
+        p++;
+    }
+    
+}
+
+void printMatrix(int mat[][5],int row_size, int col_size){
+
+    int *start=&mat[0][0];
+    int *row_ptr=start;
+    int *end = &mat[row_size-1][col_size];
+
+    while(start != end){
+        start=row_ptr;
+        while (start != row_ptr+col_size)
+        {
+            printf("%d ",*start);
+            start++;
+        }
+        printf("\n");
+        row_ptr+=col_size;
+    }
+
+}
+
+
 int main(){
 
+    int mat[3][5]={{1,2,3,4,5},{4,5,6,2,2},{1,8,8,8,8}};
+    printMatrix(mat,3,5);
+
+    printf("\n");
+
     int arr[] = {1,4,7,5,6,25,14,5,5,5,5,5,1,1};
+    int *p=arr;
+
+    array(p,14);
+
+/*
+    printf("\n");
 
     int n = sizeof(arr)/sizeof(arr[0]);
 
@@ -89,6 +132,7 @@ int main(){
         printf("%d ", obj.arr[i]); // Not changed 
   
     printf("\n"); 
+    */
 
     return 0;
 }
