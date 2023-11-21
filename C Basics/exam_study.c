@@ -52,6 +52,4 @@ int main(){
 
     printf("%d\n",printMatrix(matrix));
 
-
-
 }

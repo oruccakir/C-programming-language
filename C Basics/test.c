@@ -126,42 +126,6 @@ int* soru05(int *p1, int *p2, int *p3){
 
 void soru06(int *p1, int *p2, int *p3){
 
-    int temp = 0;
-    if(p3 == NULL){
-        if(*p1 > *p2){
-            temp = *p1;
-            *p1 = *p2;
-            *p2 = temp;
-        }
-    }
-    else{
-
-        if(*p1 <= *p2 && *p1 <= *p3){
-            if(*p2 > *p3){
-                temp = *p2;
-                *p2 = *p3;
-                *p3 = temp;
-            }
-        }
-        else if(*p2 <= *p1 && *p2 <= *p3){
-            temp = *p1;
-            *p1 = *p2;
-            *p2 = temp;
-        }
-        else{
-            temp = *p3;
-            *p3 = *p1;
-            *p1 = temp;
-            if(*p2 > *p3){
-                temp = *p2;
-                *p2 = *p3;
-                *p3 = temp;
-            }
-        }
-
-
-    }
-	
 }
 
 void soru07(char *s, int *sizePtr){
@@ -334,6 +298,7 @@ int soru14(int A[], const unsigned int size, int even[], int odd[]){
 void soru15(char **addr, char *p, char c){
 
     addr[0] = p;
+    addr = addr + 1;
 
     while (*p != '\0')
     {
@@ -368,6 +333,9 @@ int main(int argc, char* argv[]) {
 
 	
 */
+    char c = '\0';
+    char *p = &c;
+    printf("%p",p);
 
     char *a[] = {"hdbjs","bjdscbdf","oruç","çakır"};
     char **b = a;
