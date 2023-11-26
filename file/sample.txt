@@ -1,0 +1,10 @@
+1020, Alan Turing, 22, 3.5
+1021, Ada Lovelace, 20, 3.8
+1022, Linus Torvalds, 21, 3.6
+1023, Grace Hopper, 24, 3.9
+1024, Margaret Hamilton, 22, 3.7
+1025, Tim Berners-Lee, 23, 3.8
+1026, Barbara Liskov, 24, 4.0
+1027, Donald Knuth, 22, 3.4
+1028, Ken Thompson, 24, 3.85
+1029, Dennis Ritchie, 23, 3.9
