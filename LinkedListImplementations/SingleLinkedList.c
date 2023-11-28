@@ -61,7 +61,6 @@ void addFirst(SingleLinkedList *list,int data){
     if(list->head == NULL){
         list->head = newNode;
         list->tail = newNode;
-        list->head->next = list->tail;
     }
     else{
         newNode->next = list->head;
@@ -82,7 +81,6 @@ void addLast(SingleLinkedList *list,int data){
     if(list->head == NULL){
         list->head = newNode;
         list->tail = newNode;
-        list->head->next = list->tail;
     }
     else{
         list->tail->next = newNode;
@@ -145,6 +143,95 @@ int removeLast(SingleLinkedList *list){
 
 }
 
+void insertNode(SingleLinkedList *list,int data,int index){
+
+    if(index <0 || index > list->size + 1)
+        return;
+
+    Node *newNode = createNode(data);
+
+    if(newNode == NULL)
+        return;
+    
+    if(index == 1)
+        addFirst(list,data);
+    else if(index == list->size+1)
+        addLast(list,data);
+    else{
+
+        int trace = 1;
+        Node* curr = list->head;
+        while (trace != index-1){
+            curr = curr->next;
+            trace++;
+        }
+        
+        newNode->next = curr->next;
+        curr->next = newNode;
+
+        list->size++;
+
+    }
+
+}
+
+int removeNode(SingleLinkedList *list,int index){
+
+    if(index <0 || index > list->size)
+        return 0;
+    
+    int returned_data;
+    
+    if(index == 1)
+        returned_data = removeFirst(list);
+    else if(index == list->size)
+        returned_data = removeLast(list);
+    else{
+
+        int trace = 1;
+        Node *curr = list->head;
+        while(trace != index -1){
+            curr = curr->next;
+            trace++;
+        }
+
+        Node *removedNode = curr->next;
+        
+        returned_data = removedNode->data;
+
+        curr->next = curr->next->next;
+
+        free(removedNode);
+
+        list->size--;
+
+    }
+
+    return returned_data;
+
+}
+
+int search(SingleLinkedList *list,int goal){
+
+    Node *curr = list->head;
+
+    int index = 1;
+
+    while(curr != NULL){
+
+        if(curr->data == goal)
+            return index;
+        
+        index++;
+
+        curr = curr->next;
+
+    }
+
+    return -1;
+
+}
+
 
 int main(){
 
@@ -155,18 +242,23 @@ int main(){
     SingleLinkedList *list_ptr = &list;
     addLast(list_ptr,12);
     addLast(list_ptr,21);
-    printInfo(list_ptr);
-    printList(list_ptr);
     removeLast(list_ptr);
     removeLast(list_ptr);
-    printList(list_ptr);
+    insertNode(list_ptr,14,1);
+    insertNode(list_ptr,15,2);
+
+    for(int i=0; i<10; i++)
+        addFirst(list_ptr,i);
+    
+    insertNode(list_ptr,21,5);
+    removeNode(list_ptr,5);
+    removeNode(list_ptr,7);
+    removeNode(list_ptr,list_ptr->size);
+
+    printf("%d\n",search(list_ptr,0));
+
     printInfo(list_ptr);
-    /*
-    removeFirst(list_ptr);
-    removeFirst(list_ptr);
-    removeFirst(list_ptr);
     printList(list_ptr);
-*/
     return 0;
 }
 
