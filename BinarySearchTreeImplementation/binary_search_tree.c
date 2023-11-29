@@ -1,16 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-
-struct TreeNode
-{
-    int data;
-    struct TreeNode *left;
-    struct TreeNode *right;
-    struct TreeNode *parent;
-};
-
-typedef struct TreeNode TreeNode;
+#include"Queue.h"
 
 struct BinarySearchTree{
 
@@ -79,23 +69,23 @@ void insertNode(BinarySearchTree *tree_ptr,int data){
 
 
 
-int search(BinarySearchTree *tree_ptr,int goal){
+TreeNode* search(BinarySearchTree *tree_ptr,int goal){
 
     if(tree_ptr->root == NULL)
-        return 0;
+        return NULL;
     
     TreeNode *curr = tree_ptr->root;
     while (curr != NULL)
     {
         if(curr->data == goal)
-            return 1;
+            return curr;
         else if(goal > curr->data)
             curr = curr->right;
         else
             curr = curr->left;
     }
     
-    return 0;
+    return NULL;
 }
 
 int heightUtil(TreeNode *root){
@@ -167,6 +157,112 @@ void printInOrder(BinarySearchTree *tree_ptr){
 }
 
 
+void printLevelOrder(BinarySearchTree *tree_ptr){
+
+    if(tree_ptr->root == NULL)
+        return;
+    
+    Queue qu;
+    qu.head=qu.tail = NULL;
+    qu.size=0;
+    Queue *qu_ptr = &qu;
+
+    TreeNode *temp = NULL;
+
+    enque(qu_ptr,tree_ptr->root);
+
+    int size=0;
+
+    while(qu_ptr->size >0){
+        size = qu_ptr->size;
+        for(int i=0; i<size; i++){
+            temp = deque(qu_ptr);
+            printf("%d ",temp->data);
+            if(temp->left != NULL)
+                enque(qu_ptr,temp->left);
+            if(temp->right != NULL)
+                enque(qu_ptr,temp->right);
+        }
+        printf("\n");
+        
+    }
+    printf("\n");
+
+}
+
+void printFromChildToParent(BinarySearchTree *tree_ptr,int child_data){
+
+    TreeNode *child = search(tree_ptr,child_data);
+
+    if(child == NULL)
+        return;
+
+    TreeNode *temp = child;
+    while(temp != NULL){
+        printf("%d ",temp->data);
+        temp = temp->parent;
+    }
+    printf("\n");
+}
+
+
+int pollFirst(BinarySearchTree *tree_ptr){
+
+    if(tree_ptr == NULL)
+        return -1;
+    
+    TreeNode *removedNode;
+    int returned_data=0;
+    
+    if(tree_ptr->size == 1){
+
+        removedNode = tree_ptr->root;
+        returned_data = removedNode->data;
+        free(removedNode);
+        tree_ptr->root = NULL;
+        
+    }
+    else{
+
+        TreeNode *curr = tree_ptr->root;
+
+        while(curr->left != NULL){
+            curr = curr->left;
+        }
+
+        removedNode = curr;
+        if(removedNode == tree_ptr->root){
+
+            returned_data = removedNode->data;
+
+            if(tree_ptr->root->right != NULL){
+
+                tree_ptr->root->right->parent = NULL;
+                tree_ptr->root = tree_ptr->root->right;
+
+            }
+            else{
+                tree_ptr->root = NULL;
+            }
+
+        }
+        else{
+
+            removedNode->parent->left = removedNode->right;
+            if(removedNode->right != NULL)
+                removedNode->right->parent = removedNode->parent;
+            returned_data = removedNode->data;
+            free(removedNode);
+        }
+
+    }
+
+    tree_ptr->size--;
+
+    return returned_data;
+
+}
+
 
 
 
@@ -179,23 +275,78 @@ int main(){
     tree.size=0;
     tree.root=NULL;
     BinarySearchTree *tree_ptr = &tree;
-    insertNode(tree_ptr,15);
-    insertNode(tree_ptr,20);
-    insertNode(tree_ptr,40);
-    insertNode(tree_ptr,8);
+    
+    int arr[20] = {89,78,45,12,54,65,21,31,25};
+    for(int i=0; i<9; i++)
+        insertNode(tree_ptr,arr[i]);
+
+    
+    
+    printFromChildToParent(tree_ptr,25);
+
+    
+
+    printf("TESTING\n");
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printFromChildToParent(tree_ptr,25);
+
+
+
     printPreOrder(tree_ptr);
     printPostOrder(tree_ptr);
     printInOrder(tree_ptr);
-    printf("%d\n",search(tree_ptr,20));
-    printf("%d",height(tree_ptr));
 
 
 
+    printLevelOrder(tree_ptr);
+
+    printf("Height : %d\n",height(tree_ptr));
+    printf("Size : %d \n",tree.size);
 
 
+    printf("Tesssssss");
 
+    int arr1[20] = {55,78,45,52,54,65,21,31,25};
+    for(int i=0; i<9; i++)
+        insertNode(tree_ptr,arr1[i]);
+    
 
+    printf("POLLING\n");
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    printf("%d \n",pollFirst(tree_ptr));
+    
+    printf("\n\n");
+    
+    printf("TRAVERSAL\n");
+    printPreOrder(tree_ptr);
+    printPostOrder(tree_ptr);
+    printInOrder(tree_ptr);
+    printf("\n\n");
 
+    printf("Head data\n");
+    printf("%d\n",tree_ptr->root->data);
+
+    printf("LEVEL ORDER\n");
+    printLevelOrder(tree_ptr);
+
+    printf("Height : %d\n",height(tree_ptr));
+    printf("Size : %d \n",tree.size);
+
+    printFromChildToParent(tree_ptr,78);
 
 
 

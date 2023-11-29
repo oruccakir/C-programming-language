@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include<stdlib.h>
+#include"Treenode.h"    
+
+typedef struct TreeNode TreeNode;
 
 struct QuNode{
-    int data;
+    TreeNode *data;
     struct QuNode *next;
-    struct QuNode *prev;
 };
+
 
 typedef struct QuNode QuNode;
 
@@ -17,7 +20,7 @@ struct Queue{
 
 typedef struct Queue Queue;
 
-QuNode* create_Node(int data){
+QuNode* create_Node(TreeNode *data){
 
     QuNode * newNode = (QuNode*)malloc(sizeof(QuNode));
     
@@ -26,8 +29,8 @@ QuNode* create_Node(int data){
     
     newNode->data = data;
     newNode->next = NULL;
-    newNode->prev = NULL;
-
+    
+    
     return newNode;
 
 }
@@ -38,14 +41,14 @@ void printQueue(Queue * qu){
     QuNode *curr = qu->head;
     while (curr != NULL)
     {
-        printf("%d ",curr->data);
+        printf("%d ",curr->data->data);
         curr = curr->next;
     }
     printf("]\n");
     
 }
 
-void enque(Queue *qu_ptr,int data){
+void enque(Queue *qu_ptr,TreeNode *data){
 
     QuNode *newNode = create_Node(data);
 
@@ -58,7 +61,6 @@ void enque(Queue *qu_ptr,int data){
     }
     else{
         qu_ptr->tail->next= newNode;
-        newNode->prev = qu_ptr->tail;
         qu_ptr->tail = newNode;
     }
 
@@ -66,24 +68,19 @@ void enque(Queue *qu_ptr,int data){
 
 }
 
-int deque(Queue *qu_ptr){
+TreeNode* deque(Queue *qu_ptr){
 
     if(qu_ptr->head == NULL)
-        return -1;
+        return NULL;
     
-    QuNode *removedNode = qu_ptr->tail;
+    QuNode *removedNode = qu_ptr->head;
 
-    int returned_data = removedNode->data;
+    TreeNode* returned_data = removedNode->data;
 
-    if(qu_ptr->tail->prev == NULL){
-        qu_ptr->head = qu_ptr->tail = NULL;
-    }
-    else{
+    qu_ptr->head = qu_ptr->head->next;
 
-        qu_ptr->tail->prev->next = NULL;
-        qu_ptr->tail = qu_ptr->tail->prev;
-
-    }
+    if(qu_ptr->head == NULL)
+        qu_ptr->tail == NULL;
     
     free(removedNode);
 
