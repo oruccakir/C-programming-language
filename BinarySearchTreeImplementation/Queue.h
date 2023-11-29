@@ -1,25 +1,25 @@
 #include <stdio.h>
 #include<stdlib.h>
 
-struct Node{
+struct QuNode{
     int data;
-    struct Node *next;
-    struct Node *prev;
+    struct QuNode *next;
+    struct QuNode *prev;
 };
 
-typedef struct Node Node;
+typedef struct QuNode QuNode;
 
 struct Queue{
     int size;
-    Node *head;
-    Node *tail;
+    QuNode *head;
+    QuNode *tail;
 };
 
 typedef struct Queue Queue;
 
-Node* createNode(int data){
+QuNode* create_Node(int data){
 
-    Node * newNode = (Node*)malloc(sizeof(Node));
+    QuNode * newNode = (QuNode*)malloc(sizeof(QuNode));
     
     if(newNode == NULL)
         return NULL;
@@ -35,7 +35,7 @@ Node* createNode(int data){
 void printQueue(Queue * qu){
 
     printf("[ ");
-    Node *curr = qu->head;
+    QuNode *curr = qu->head;
     while (curr != NULL)
     {
         printf("%d ",curr->data);
@@ -47,7 +47,7 @@ void printQueue(Queue * qu){
 
 void enque(Queue *qu_ptr,int data){
 
-    Node *newNode = createNode(data);
+    QuNode *newNode = create_Node(data);
 
     if(newNode == NULL)
         return;
@@ -71,7 +71,7 @@ int deque(Queue *qu_ptr){
     if(qu_ptr->head == NULL)
         return -1;
     
-    Node *removedNode = qu_ptr->tail;
+    QuNode *removedNode = qu_ptr->tail;
 
     int returned_data = removedNode->data;
 
