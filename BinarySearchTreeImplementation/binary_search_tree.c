@@ -263,6 +263,66 @@ int pollFirst(BinarySearchTree *tree_ptr){
 
 }
 
+int pollLast(BinarySearchTree *tree_ptr){
+
+    if(tree_ptr == NULL)
+        return -1;
+    
+    TreeNode *removedNode;
+    int returned_data=0;
+
+    if(tree_ptr->size == 1){
+
+        removedNode = tree_ptr->root;
+        returned_data = removedNode->data;
+        free(removedNode);
+        tree_ptr->root = NULL;
+
+    }
+    else{
+
+        TreeNode *curr = tree_ptr->root;
+
+        while(curr->right != NULL){
+            curr = curr->right;
+        }
+
+        removedNode = curr;
+
+        if(removedNode == tree_ptr->root){
+            returned_data = removedNode->data;
+
+            if(tree_ptr->root->left != NULL){
+                tree_ptr->root->parent = NULL;
+                tree_ptr->root = tree_ptr->root->left;
+            }
+            else{
+                tree_ptr->root = NULL;
+            }
+
+        }
+        else{
+
+            removedNode->parent->right = removedNode->left;
+
+            if(removedNode->left != NULL)
+                removedNode->left->parent = removedNode->parent;
+            
+            returned_data = removedNode->data;
+
+            free(removedNode);
+
+
+        }
+
+    }
+
+    tree_ptr->size--;
+
+    return returned_data;
+
+}
+
 
 
 
