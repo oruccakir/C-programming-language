@@ -92,8 +92,8 @@ int deque(Node **head_ptr,Node **tail_ptr){
     if(head_ptr == NULL || *head_ptr == NULL)
         return 0;
     
-    Node *removedNode = NULL;
-    int retured_data = 0;
+    Node *removedNode = *head_ptr;
+    int retured_data = (*head_ptr)->data;
 
     *head_ptr = (*head_ptr)->next;
     free(removedNode);
