@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<math.h>
 
 struct Node{
     int data;
@@ -15,7 +16,7 @@ Node *createNode(int data){
     Node *newNode = (Node *) malloc(sizeof(Node));
     newNode->left = NULL;
     newNode->right = NULL;
-    newNode->level = 0;
+    newNode->level = 1;
     newNode->data = data;
     
     return newNode;
@@ -43,7 +44,7 @@ void insert(Node **root,int data){
         Node *prev = NULL;
         Node *curr = *root;
         int isFound = 0;
-        int level = 0;
+        int level = 1;
         while (curr != NULL && isFound == 0)
         {
             prev = curr;
@@ -97,6 +98,15 @@ int search(Node *head_ptr,int goal){
 
 }
 
+int height(Node *root){
+    if(root == NULL)
+        return 0;
+    int left_height = height(root->left);
+    int right_height = height(root->right);
+    return  1+((right_height >= left_height) ? right_height : left_height);
+}
+
+
 
 int main(){
 
@@ -107,9 +117,14 @@ int main(){
     insert(head_ptr,11);
     insert(head_ptr,55);
     insert(head_ptr,69);
+    insert(head_ptr,12);
+    insert(head_ptr,58);
+    insert(head_ptr,69);
+    insert(head_ptr,69);
     preOrder(head);
     printf("\n");
     printf("%d",search(head,55));
+    printf("\n %d",height(head));
 
     return 0;
 }
