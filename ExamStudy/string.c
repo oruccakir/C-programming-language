@@ -61,6 +61,7 @@ int main(){
     printf("%s\n",tokenPtr);
     tokenPtr = strtok(NULL," ");
   } 
+  
 
 
 
