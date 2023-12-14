@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 
 
@@ -222,6 +223,30 @@ int main(){
     deallocate2DArray(arr,6);
     deallocate2DArray(arr2,5);
     deallocate3DArray(arr1,6,8);
+
+    char str1[] = "Ahmet";
+
+    char *str = (char *) calloc(6,sizeof(char));
+    strcpy(str,str1);
+    str1[2] = 'b';
+    printf("%s\n",str); 
+
+    int arr5[] = {1,2,3};
+    int arr3[] = {4,5,6,7,8};
+
+    int arr4[] = {5,6};
+    int *a[3] = {arr5,arr3,arr4};
+    printf("%d",sizeof(arr5)/sizeof(int));
+    int *ptr1 = NULL;
+    int size1=0;
+    
+    for(int i=0; i<3; i++){
+        ptr1 = a[i];
+        size1 = sizeof(a[i])/sizeof(int);
+        for(int k=0; k<size1; k++)
+            printf("%d ",a[i][k]);
+        printf("\n");
+    }
 
 
     
