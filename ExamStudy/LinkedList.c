@@ -199,6 +199,7 @@ int main(){
     insert(head_ptr,21,0);
     insert(head_ptr,11,1);
     insert(head_ptr,101,4);
+    delete(head_ptr,4);
     //reverseList(head_ptr);
     printList(head);
 

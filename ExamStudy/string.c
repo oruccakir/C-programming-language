@@ -14,7 +14,24 @@ char* cat(char *str1, char *str2) {
     return s;
 }
 
+char *cat1(char *s1,char *s2, char *s3){
 
+    char *mid = (char *) malloc(strlen(s1) + strlen(s2)+1);
+
+    if(mid != NULL){
+        strcpy(mid,s1);
+        strcat(mid,s2);
+    }
+
+    char *last = (char*) malloc(strlen(mid) + strlen(s3) + 1);
+
+    if(last != NULL){
+        strcpy(last,mid);
+        strcat(last,s3);
+    }
+
+    return last;
+}
 
 
 int main(){
@@ -61,6 +78,15 @@ int main(){
     printf("%s\n",tokenPtr);
     tokenPtr = strtok(NULL," ");
   } 
+
+  char s1[] = "Oruc";
+  char s2[] = "Erdem";
+  char s3[] = "Bebeleri";
+
+  printf("%s \n",cat1(s1,s2,s3));
+
+  char *s4 = "Mehmet";
+  printf("%s",s4);
   
 
 
