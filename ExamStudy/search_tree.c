@@ -106,6 +106,24 @@ int height(Node *root){
     return  1+((right_height >= left_height) ? right_height : left_height);
 }
 
+void size(Node *root,int *siz){
+    if(root == NULL)
+        return;
+    
+    *siz = *siz + 1;
+    size(root->left,siz);
+    size(root->right,siz);
+
+}
+
+int give_size(Node *root){
+
+    int siz= 0;
+    size(root,&siz);
+    return siz;
+}
+
+
 
 
 int main(){
@@ -124,7 +142,10 @@ int main(){
     preOrder(head);
     printf("\n");
     printf("%d",search(head,55));
-    printf("\n %d",height(head));
+    printf("\n %d\n",height(head));
+    printf("%d",give_size(head));
+
+
 
     return 0;
 }
